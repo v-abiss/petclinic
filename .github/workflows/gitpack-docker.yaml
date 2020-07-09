@@ -1,7 +1,7 @@
 name: gitpack.Docker
 on:
   push:
-    branches: [ master,petclinic ]
+    branches: [ master,docker ]
   pull_request:
     branches: [ master ]
 env:
