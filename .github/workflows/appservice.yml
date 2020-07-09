@@ -1,7 +1,11 @@
 name: Deploy Java Web App to Azure
-
- push:
-    branches: [ master]
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      # Push events on master branch
+      - master
+      - docker
   pull_request:
     branches: [ master ]
 
