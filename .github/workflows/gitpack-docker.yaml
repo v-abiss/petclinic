@@ -1,4 +1,4 @@
-name: petclinic.Docker
+name: gitpack.Docker
 on:
   push:
     branches: [ master,petclinic ]
