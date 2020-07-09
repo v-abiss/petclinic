@@ -1,6 +1,8 @@
 name: petclinic.Docker
+on:
   push:
-    branches: [ master,docker ]
+    branches:
+      - master
   pull_request:
     branches: [ master ]
 env:
