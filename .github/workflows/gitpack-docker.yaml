@@ -28,7 +28,7 @@ jobs:
     - name: scan image
       uses: Azure/container-scan@v0
       with:
-        image-name: docker.pkg.github.com/docker-netes/petclinic/petclinic:${{ github.run_number }
+        image-name: docker.pkg.github.com/docker-netes/petclinic/petclinic:${{ github.run_number }}
     - name: push image
       run: |
         docker push docker.pkg.github.com/docker-netes/petclinic/petclinic:${{ github.run_number }}
