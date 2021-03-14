@@ -1,36 +1,43 @@
-name: gitpack.Docker
+name: Container Scan with GH packages
 on:
   push:
     branches: [ master,docker ]
   pull_request:
     branches: [ master ]
+
 env:
   JAVA_VERSION: '1.8'  
+
 jobs:
   BUILD:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v2
-      name: checkout
+      name: Checkout
+    
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: ${{ env.JAVA_VERSION }}
+    
     - name: Build with Maven
       run: mvn package --file pom.xml
-    - name: docker login to github packages
+    
+    - name: Docker Login to GH packages
       run: |
         docker login docker.pkg.github.com -u v-abiss -p ${{ secrets.GITHUB_TOKEN }}
-    - name: build and tag image
+    
+    - name: Build and Tag image
       run: |
         docker build -f ./Dockerfile -t spring-petclinic:${{ github.run_number }} .
         docker tag spring-petclinic:${{ github.run_number }} docker.pkg.github.com/v-abiss/petclinic/petclinic:${{ github.run_number }}
-    - name: scan image
+   
+    - name: Scan image
       uses: Azure/container-scan@v0
       with:
         image-name: docker.pkg.github.com/v-abiss/petclinic/petclinic:${{ github.run_number }}
-        severity-threshold: CRITICAL
-    - name: push image
+        
+    - name: Push image
       run: |
-      
-        docker push docker.pkg.github.com/docker-netes/petclinic/petclinic:${{ github.run_number }}
+        docker push docker.pkg.github.com/v-abiss/petclinic/petclinic:${{ github.run_number }}
