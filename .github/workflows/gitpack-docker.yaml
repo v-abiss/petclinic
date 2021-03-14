@@ -20,16 +20,17 @@ jobs:
       run: mvn package --file pom.xml
     - name: docker login to github packages
       run: |
-        docker login docker.pkg.github.com -u docker-netes -p ${{ secrets.GITHUB_TOKEN }}
+        docker login docker.pkg.github.com -u v-abiss -p ${{ secrets.GITHUB_TOKEN }}
     - name: build and tag image
       run: |
         docker build -f ./Dockerfile -t spring-petclinic:${{ github.run_number }} .
-        docker tag spring-petclinic:${{ github.run_number }} docker.pkg.github.com/docker-netes/petclinic/petclinic:${{ github.run_number }}
+        docker tag spring-petclinic:${{ github.run_number }} docker.pkg.github.com/v-abiss/petclinic/petclinic:${{ github.run_number }}
     - name: scan image
       uses: Azure/container-scan@v0
       with:
-        image-name: docker.pkg.github.com/docker-netes/petclinic/petclinic:${{ github.run_number }}
+        image-name: docker.pkg.github.com/v-abiss/petclinic/petclinic:${{ github.run_number }}
         severity-threshold: CRITICAL
     - name: push image
       run: |
+      
         docker push docker.pkg.github.com/docker-netes/petclinic/petclinic:${{ github.run_number }}
