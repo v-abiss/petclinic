@@ -22,7 +22,7 @@ jobs:
         java-version: ${{ env.JAVA_VERSION }}
     
     - name: Build with Maven
-      run: mvn package --file pom.xml- name: Login to the Container Registry
+      run: mvn package --file pom.xml
       
     - name: Login to the Container Registry  
       uses: azure/docker-login@v1
